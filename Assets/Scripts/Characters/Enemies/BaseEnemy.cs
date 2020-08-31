@@ -7,16 +7,17 @@ namespace Unexpected.Enemy
     public class BaseEnemy : MonoBehaviour
     {
         public int health;
-        private IMovement _movement;
+        public IMovement movement;
 
-        void Awake()
+        private void Awake()
         {
-            _movement = GetComponent<IMovement>();
+            movement = gameObject.GetComponent<IMovement>();
         }
+
 
         void FixedUpdate()
         {
-            _movement.Move();
+            movement.Move();
         }
     }
 }
