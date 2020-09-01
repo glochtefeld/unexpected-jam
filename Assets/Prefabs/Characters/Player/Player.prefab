@@ -193,20 +193,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c8260aec2f97841955d22bcb762d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 700
-  crouchSpeedMultiplier: 0.4
-  movementSmoothing: 0.05
-  airControl: 1
-  ground:
+  _jumpForce: 700
+  _crouchSpeedMultiplier: 0.4
+  _movementSmoothing: 0.05
+  _airControl: 1
+  _ground:
     serializedVersion: 2
-    m_Bits: 55
-  groundCheck: {fileID: 7018711158595071193}
-  ceilingCheck: {fileID: 7018711158884580652}
-  crouchDisableCollider: {fileID: 7018711159757712904}
-  onLandEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  onCrouchEvent:
+    m_Bits: 1280
+  _groundCheck: {fileID: 7018711158595071193}
+  _ceilingCheck: {fileID: 7018711158884580652}
+  _crouchDisableCollider: {fileID: 7018711159757712904}
+  _onLandEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!50 &7018711159757712905
@@ -284,8 +281,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0994fa642c279cb4fa746dd2ef1b9bd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 7018711159757712908}
-  runSpeed: 40
+  _controller: {fileID: 7018711159757712908}
+  _runSpeed: 40
 --- !u!114 &7018711159757712918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,6 +373,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9dc6e272-6f0b-4d91-ab1e-6299015a809f
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0609b2ea-ad1a-4ed3-b06d-1c34f0ea7d7c
+    m_ActionName: Player/Pause[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player

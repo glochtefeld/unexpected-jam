@@ -5,8 +5,12 @@ namespace Unexpected.Player
 {
     public class Movement2D : MonoBehaviour
     {
-        public Controller2D controller;
-        public float runSpeed = 40f;
+        #region Serialized Fields
+#pragma warning disable CS0649
+        [SerializeField] private Controller2D _controller;
+        [SerializeField] private float _runSpeed = 40f;
+#pragma warning restore CS0649
+        #endregion
 
         private float _horizontalMove = 0f;
         private bool _jumping;
@@ -14,14 +18,17 @@ namespace Unexpected.Player
 
         private void FixedUpdate()
         {
-            controller.Move(_horizontalMove * Time.fixedDeltaTime, _crouching, _jumping);
+            _controller.Move(
+                _horizontalMove * Time.fixedDeltaTime, 
+                _crouching, 
+                _jumping);
             _jumping = false;
         }
 
         public void Move(InputAction.CallbackContext context)
         {
             var input = context.ReadValue<Vector2>();
-            _horizontalMove = input.x * runSpeed;
+            _horizontalMove = input.x * _runSpeed;
             if (input.y > 0)
                 _jumping = true;
             if (input.y < 0)

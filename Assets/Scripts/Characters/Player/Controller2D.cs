@@ -7,28 +7,31 @@ namespace Unexpected.Player
     [RequireComponent(typeof(Collider2D))]
     public class Controller2D : MonoBehaviour
     {
+        #region Serialized Fields
+#pragma warning disable CS0649
         [Header("Movement Variables")]
-        public float jumpForce = 400f;
+        [SerializeField] private float _jumpForce = 400f;
         [Range(0, 1)]
-        public float crouchSpeedMultiplier = 0.4f;
+        [SerializeField] private float _crouchSpeedMultiplier = 0.4f;
         [Range(0, 0.3f)]
-        public float movementSmoothing = 0.05f;
-        public bool airControl = true;
+        [SerializeField] private float _movementSmoothing = 0.05f;
+        [SerializeField] private bool _airControl = true;
+        
         [Header("Collision Bounding")]
-        public LayerMask ground;
-        public Transform groundCheck;
-        public Transform ceilingCheck;
-        public Collider2D crouchDisableCollider;
-        [Header("Events")]
+        [SerializeField] private LayerMask _ground;
+        [SerializeField] private Transform _groundCheck;
+        [SerializeField] private Transform _ceilingCheck;
+        [SerializeField] private Collider2D _crouchDisableCollider;
         [Space]
-        public UnityEvent onLandEvent;
-        [System.Serializable]
-        public class BoolEvent : UnityEvent<bool> { }
-        public BoolEvent onCrouchEvent;
-        private bool _isCrouching = false;
+        [Header("Events")]
+        [SerializeField] private UnityEvent _onLandEvent;
+        [SerializeField] private BoolEvent _onCrouchEvent;
+#pragma warning restore CS0649
+        #endregion
 
         private const float GROUNDED_RADIUS = 0.2f;
         private const float CEILING_RADIUS = 0.2f;
+        private bool _isCrouching = false;
         private bool _isGrounded;
         private bool _facingRight = true;
         private Rigidbody2D _rigidbody2d;
@@ -38,10 +41,10 @@ namespace Unexpected.Player
         private void Awake()
         {
             _rigidbody2d = GetComponent<Rigidbody2D>();
-            if (onLandEvent == null)
-                onLandEvent = new UnityEvent();
-            if (onCrouchEvent == null)
-                onCrouchEvent = new BoolEvent();
+            if (_onLandEvent == null)
+                _onLandEvent = new UnityEvent();
+            if (_onCrouchEvent == null)
+                _onCrouchEvent = new BoolEvent();
         }
 
         private void FixedUpdate()
@@ -50,16 +53,16 @@ namespace Unexpected.Player
             _isGrounded = false;
 
             Collider2D[] colliders = Physics2D.OverlapCircleAll(
-                groundCheck.position,
+                _groundCheck.position,
                 GROUNDED_RADIUS,
-                ground);
+                _ground);
             for (int i = 0; i < colliders.Length; i++)
             {
                 if (colliders[i].gameObject != gameObject)
                 {
                     _isGrounded = true;
                     if (!wasGrounded)
-                        onLandEvent.Invoke();
+                        _onLandEvent.Invoke();
                 }
             }
         }
@@ -69,34 +72,34 @@ namespace Unexpected.Player
         {
             if (!crouch
                 && Physics2D.OverlapCircle(
-                    ceilingCheck.position,
+                    _ceilingCheck.position,
                     CEILING_RADIUS,
-                    ground))
+                    _ground))
                 crouch = true;
 
-            if (_isGrounded || airControl)
+            if (_isGrounded || _airControl)
             {
                 if (crouch)
                 {
                     if (!_isCrouching)
                     {
                         _isCrouching = true;
-                        onCrouchEvent.Invoke(true);
+                        _onCrouchEvent.Invoke(true);
                     }
 
-                    move *= crouchSpeedMultiplier;
+                    move *= _crouchSpeedMultiplier;
 
-                    if (crouchDisableCollider != null)
-                        crouchDisableCollider.enabled = false;
+                    if (_crouchDisableCollider != null)
+                        _crouchDisableCollider.enabled = false;
                 }
                 else
                 {
-                    if (crouchDisableCollider != null)
-                        crouchDisableCollider.enabled = true;
+                    if (_crouchDisableCollider != null)
+                        _crouchDisableCollider.enabled = true;
                     if (_isCrouching)
                     {
                         _isCrouching = false;
-                        onCrouchEvent.Invoke(false);
+                        _onCrouchEvent.Invoke(false);
                     }
                 }
 
@@ -107,7 +110,7 @@ namespace Unexpected.Player
                     _rigidbody2d.velocity,
                     targetVelocity,
                     ref _velocity,
-                    movementSmoothing);
+                    _movementSmoothing);
 
                 if ((move > 0 && !_facingRight)
                     || (move < 0 && _facingRight))
@@ -117,7 +120,7 @@ namespace Unexpected.Player
             if (_isGrounded && jump)
             {
                 _isGrounded = false;
-                _rigidbody2d.AddForce(new Vector2(0f, jumpForce));
+                _rigidbody2d.AddForce(new Vector2(0f, _jumpForce));
             }
         }
 
@@ -130,4 +133,6 @@ namespace Unexpected.Player
         }
 
     }
+
+    class BoolEvent : UnityEvent<bool> { }
 }

@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Lives : MonoBehaviour
 {
-    public int maxLives = 3;
+    #region Serialized Fields
+#pragma warning disable CS0649
+    [SerializeField] private int _maxLives;
+#pragma warning restore CS0649
+    #endregion
 
     // Start is called before the first frame update
     void Start()
