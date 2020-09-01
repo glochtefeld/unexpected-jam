@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseTime : Time 
+public class PauseTime : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static bool Paused { set; get; }
 
-    // Update is called once per frame
-    void Update()
+    public void Pause(UnityEngine.InputSystem.InputAction.CallbackContext c)
     {
-        
+        Paused = !Paused;
     }
 }
