@@ -58,7 +58,8 @@ namespace Unexpected.Player
                 _ground);
             for (int i = 0; i < colliders.Length; i++)
             {
-                if (colliders[i].gameObject != gameObject)
+                if (colliders[i].gameObject != gameObject
+                    && !colliders[i].isTrigger)
                 {
                     _isGrounded = true;
                     if (!wasGrounded)
@@ -70,12 +71,19 @@ namespace Unexpected.Player
 
         public void Move(float move, bool crouch, bool jump)
         {
-            if (!crouch
-                && Physics2D.OverlapCircle(
-                    _ceilingCheck.position,
-                    CEILING_RADIUS,
-                    _ground))
-                crouch = true;
+            var colliders = Physics2D.OverlapCircleAll(
+                _ceilingCheck.position,
+                CEILING_RADIUS,
+                _ground);
+
+            foreach (var collider in colliders)
+            {
+                if (!crouch && !collider.isTrigger)
+                {
+                    crouch = true;
+                    break;
+                }
+            }
 
             if (_isGrounded || _airControl)
             {
@@ -117,7 +125,9 @@ namespace Unexpected.Player
                     Flip();
             }
 
-            if (_isGrounded && jump)
+            if (_isGrounded 
+                && jump 
+                && _rigidbody2d.velocity.y < 10f)
             {
                 _isGrounded = false;
                 _rigidbody2d.AddForce(new Vector2(0f, _jumpForce));
@@ -136,3 +146,7 @@ namespace Unexpected.Player
 
     class BoolEvent : UnityEvent<bool> { }
 }
+/* BUG: Player will "double jump" if the jump key is mashed,
+ * occurs unpredictably but tied to physics loop.
+ * SOLUTION: Before applying force, check to make sure player does
+ * not have a large vertical velocity. */
