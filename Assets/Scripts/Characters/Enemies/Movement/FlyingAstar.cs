@@ -11,7 +11,6 @@ namespace Unexpected.Enemy.Movement
         [SerializeField] private Rigidbody2D _rigidbody2d;
         [SerializeField] private Transform _sprite;
         [Header("A* Pathfinding")]
-        [SerializeField] private Transform _target;
         [SerializeField] private Seeker _seeker;
         [SerializeField] private float _nextWaypointDistance = 3;
 #pragma warning restore CS0649
@@ -20,10 +19,20 @@ namespace Unexpected.Enemy.Movement
         private Path _path;
         private int _currentWaypoint = 0;
         private bool _reachedEndOfPath = false;
+        private GameObject _player;
+        private Transform _target;
 
         #region Monobehaviour
         void Start()
         {
+            _player = GameObject.FindGameObjectWithTag("Player");
+            _target = _player.transform;
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject != _player)
+                return;
             InvokeRepeating("UpdatePath", 0f, 1f);
         }
         #endregion

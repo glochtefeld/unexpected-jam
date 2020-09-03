@@ -33,7 +33,11 @@ namespace Unexpected.Enemy.Movement
 
         public void Die() { }
 
-        private void OnTriggerExit2D(Collider2D other) => Flip();
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            if (other.gameObject.layer == _ground.value)
+                Flip();
+        }
 
         private void Flip()
         {
