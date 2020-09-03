@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using UnityEngine;
+﻿using UnityEngine;
 namespace Unexpected.Enemy.Movement
 {
     [RequireComponent(typeof(Rigidbody2D))]

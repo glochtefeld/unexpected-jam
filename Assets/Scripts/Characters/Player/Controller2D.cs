@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unexpected.Objects.Platforms.Types;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Unexpected.Player
@@ -36,6 +37,8 @@ namespace Unexpected.Player
         private bool _facingRight = true;
         private Rigidbody2D _rigidbody2d;
         private Vector3 _velocity = Vector3.zero;
+        private Collider2D[] _ceilingColliders;
+        private Collider2D[] _groundColliders;
 
         #region Monobehaviour
         private void Awake()
@@ -52,14 +55,14 @@ namespace Unexpected.Player
             bool wasGrounded = _isGrounded;
             _isGrounded = false;
 
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(
+            _groundColliders = Physics2D.OverlapCircleAll(
                 _groundCheck.position,
                 GROUNDED_RADIUS,
                 _ground);
-            for (int i = 0; i < colliders.Length; i++)
+            for (int i = 0; i < _groundColliders.Length; i++)
             {
-                if (colliders[i].gameObject != gameObject
-                    && !colliders[i].isTrigger)
+                if (_groundColliders[i].gameObject != gameObject
+                    && !_groundColliders[i].isTrigger)
                 {
                     _isGrounded = true;
                     if (!wasGrounded)
@@ -71,12 +74,25 @@ namespace Unexpected.Player
 
         public void Move(float move, bool crouch, bool jump)
         {
-            var colliders = Physics2D.OverlapCircleAll(
+            _ceilingColliders = Physics2D.OverlapCircleAll(
                 _ceilingCheck.position,
                 CEILING_RADIUS,
                 _ground);
 
-            foreach (var collider in colliders)
+            if (crouch)
+            {
+                foreach (var c in _groundColliders)
+                {
+                    if (c.GetComponent<Fallthrough>() != null)
+                    {
+                        StartCoroutine(c.
+                            GetComponent<Fallthrough>()
+                            .DisableCollider());
+                        break;
+                    }
+                }
+            }
+            foreach (var collider in _ceilingColliders)
             {
                 if (!crouch && !collider.isTrigger)
                 {

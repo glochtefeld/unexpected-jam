@@ -9,6 +9,7 @@ namespace Unexpected.Player
 #pragma warning disable CS0649
         [SerializeField] private Controller2D _controller;
         [SerializeField] private float _runSpeed = 40f;
+        [SerializeField] private LayerMask _groundLayer;
 #pragma warning restore CS0649
         #endregion
 
@@ -32,10 +33,13 @@ namespace Unexpected.Player
             if (input.y > 0)
                 _jumping = true;
             if (input.y < 0)
+            {
                 _crouching = true;
+            }
             else
                 _crouching = false;
         }
+
     }
 }
 /* This uses the new InputSystem package for unity, which is more 
