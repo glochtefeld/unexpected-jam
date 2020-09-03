@@ -42,6 +42,9 @@ namespace Unexpected.Player
 
     }
 }
-/* This uses the new InputSystem package for unity, which is more 
+/* Movement 2D processes movement input from the keyboard and
+ * any attached controllers.
+ * 
+ * This uses the new InputSystem package for unity, which is more 
    efficient because it relies on events being fired off instead of
    the Update() method. I think. */

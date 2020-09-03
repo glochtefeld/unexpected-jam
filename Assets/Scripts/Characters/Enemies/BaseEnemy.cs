@@ -87,3 +87,5 @@ namespace Unexpected.Enemy
         #endregion
     }
 }
+/* Wrapper script for all non-major enemies. Controls pausing,
+ * dying, movement, etc. */

@@ -6,12 +6,6 @@ namespace Unexpected.Objects.Platforms
     [RequireComponent(typeof(IPlatform))]
     public class BaseScriptedPlatform : MonoBehaviour
     {
-        #region Serialized Fields
-#pragma warning disable CS0649
-
-#pragma warning restore CS0649
-        #endregion
-
         private IPlatform _platformType;
 
         #region Monobehaviour
@@ -29,3 +23,6 @@ namespace Unexpected.Objects.Platforms
 
     }
 }
+/* This is a wrapper class that goes on all Dynamic platforms.
+ * It simply calls the IMovement derived script attached (_platformType)
+ * to do whatever it does, as long as time isn't paused. */

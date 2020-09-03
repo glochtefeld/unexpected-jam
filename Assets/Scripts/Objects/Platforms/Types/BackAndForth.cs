@@ -15,17 +15,6 @@ namespace Unexpected.Objects.Platforms.Types
         #endregion
         private int _target = 0;
         private float _progress = 0f;
-        #region Monobehaviour
-        void Start()
-        {
-
-        }
-
-        void Update()
-        {
-
-        }
-        #endregion
 
         public void Activate()
         {
@@ -34,7 +23,6 @@ namespace Unexpected.Objects.Platforms.Types
                 _progress = 0f;
                 _target++;
                 _target = (_target >= _positions.Length) ? 0 : _target;
-                //Debug.Log($"Next Target {_target}");
             }
 
             transform.position = Vector2.Lerp(
@@ -47,6 +35,5 @@ namespace Unexpected.Objects.Platforms.Types
     }
 }
 
-/* Lerps a platform between n positions. A platform is 
- * assumed to start moving towards Extreme B, and will only reverse 
- * direction when it is (approximately) equal. */
+/* Lerps a platform in a circuit between n positions. For a smoother
+ * movement, Vector2.SmoothDamp() could be used. */

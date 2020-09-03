@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Lives : MonoBehaviour
@@ -10,17 +10,35 @@ public class Lives : MonoBehaviour
 #pragma warning restore CS0649
     #endregion
 
+    public int CurrentLives { set; get; }
     // Start is called before the first frame update
     void Start()
     {
-        
+        CurrentLives = _maxLives;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void LoseLife() 
+    { 
+        Debug.Log("Lost life");
+        if (CurrentLives > 0)
+            CurrentLives--;
+        else
+        {
+            StartCoroutine(Die());
+            return;
+        }
+        StartCoroutine(Invulnerability());
+
+    }
+
+    private IEnumerator Invulnerability()
     {
-        
+        throw new NotImplementedException();
     }
 
-    public void LoseLife() { Debug.Log("Lost life"); } // TODO: Implement
+    private IEnumerator Die()
+    {
+        throw new NotImplementedException();
+    }
 }
+/* Number of lives that the player currently has. */
