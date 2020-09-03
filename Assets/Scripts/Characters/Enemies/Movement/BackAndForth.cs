@@ -31,6 +31,8 @@ namespace Unexpected.Enemy.Movement
                 _movementSmoothing);
         }
 
+        public void Die() { }
+
         private void OnTriggerExit2D(Collider2D other) => Flip();
 
         private void Flip()

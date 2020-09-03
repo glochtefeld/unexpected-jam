@@ -3,5 +3,6 @@
     public interface IMovement
     {
         void Move();
+        void Die();
     }
 }

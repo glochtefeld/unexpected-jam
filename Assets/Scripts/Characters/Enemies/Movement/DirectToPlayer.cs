@@ -60,6 +60,8 @@ namespace Unexpected.Enemy.Movement
             }
         }
 
+        public void Die() => _state = Movement.Dead;
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.gameObject != _player || _state != Movement.None)
@@ -70,7 +72,10 @@ namespace Unexpected.Enemy.Movement
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.layer != gameObject.layer)
+            {
+                Die();
                 Destroy(gameObject);    
+            }
             // TODO: Particle System for explosion
         }
 

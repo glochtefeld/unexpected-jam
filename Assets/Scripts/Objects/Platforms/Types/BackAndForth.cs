@@ -34,7 +34,7 @@ namespace Unexpected.Objects.Platforms.Types
                 _progress = 0f;
                 _target++;
                 _target = (_target >= _positions.Length) ? 0 : _target;
-                Debug.Log($"Next Target {_target}");
+                //Debug.Log($"Next Target {_target}");
             }
 
             transform.position = Vector2.Lerp(

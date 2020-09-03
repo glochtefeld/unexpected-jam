@@ -56,13 +56,6 @@ namespace Unexpected.Enemy
             yield return null;
         }
 
-        private bool ApproximatelyEqual(Vector2 a, Vector2 b)
-        {
-            if (Mathf.Abs(a.x - b.x) < 0.1f && Mathf.Abs(a.y - b.y) < 0.1f)
-                return true;
-            return false;
-        }
-
         #region Health and Damage
         private void OnCollisionEnter2D(Collision2D collision)
         {
@@ -78,6 +71,8 @@ namespace Unexpected.Enemy
 
         private IEnumerator Die()
         {
+            _dead = true;
+            _movement.Die();
             while (PauseTime.Paused)
             {
                 yield return null;
@@ -86,8 +81,7 @@ namespace Unexpected.Enemy
             _rigidbody.AddTorque(1, ForceMode2D.Impulse);
             _rigidbody.AddForce(Vector2.down, ForceMode2D.Impulse);
             _mainCollider.enabled = false;
-            while (transform.position.y > -20)
-                yield return null;
+            yield return new WaitForSeconds(1f);
             DestroyImmediate(gameObject);
         }
         #endregion
