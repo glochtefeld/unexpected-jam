@@ -1,5 +1,5 @@
 {
-    "name": "Input",
+    "name": "InputMap",
     "maps": [
         {
             "name": "Player",
@@ -25,6 +25,14 @@
                     "name": "Fire",
                     "type": "Button",
                     "id": "ae17701c-f97a-473d-bce0-f89e6e6ab6c1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "0609b2ea-ad1a-4ed3-b06d-1c34f0ea7d7c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -259,6 +267,17 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "084215c2-1c01-4970-938a-2168e0aa9c41",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1,130 +1,168 @@
-﻿using UnityEngine;
+﻿using Unexpected.Objects.Platforms.Types;
+using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(Collider2D))]
-public class Controller2D : MonoBehaviour
+namespace Unexpected.Player
 {
-    [Header("Movement Variables")]
-    public float jumpForce = 400f;
-    [Range(0, 1)]
-    public float crouchSpeedMultiplier = 0.4f;
-    [Range(0, 0.3f)]
-    public float movementSmoothing = 0.05f;
-    public bool airControl = true;
-    [Header("Collision Bounding")]
-    public LayerMask ground;
-    public Transform groundCheck;
-    public Transform ceilingCheck;
-    public Collider2D crouchDisableCollider;
-    [Header("Events")]
-    [Space]
-    public UnityEvent onLandEvent;
-    [System.Serializable]
-    public class BoolEvent: UnityEvent<bool> { }
-    public BoolEvent onCrouchEvent;
-    private bool _isCrouching = false;
-
-    private const float GROUNDED_RADIUS = 0.2f;
-    private const float CEILING_RADIUS = 0.2f;
-    private bool _isGrounded;
-    private bool _facingRight = true;
-    private Rigidbody2D _rigidbody2d;
-    private Vector3 _velocity = Vector3.zero;
-    
-    #region Monobehaviour
-    private void Awake()
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Collider2D))]
+    public class Controller2D : MonoBehaviour
     {
-        _rigidbody2d = GetComponent<Rigidbody2D>();
-        if (onLandEvent == null)
-            onLandEvent = new UnityEvent();
-        if (onCrouchEvent == null)
-            onCrouchEvent = new BoolEvent();
-    }
+        #region Serialized Fields
+#pragma warning disable CS0649
+        [Header("Movement Variables")]
+        [SerializeField] private float _jumpForce = 400f;
+        [Range(0, 1)]
+        [SerializeField] private float _crouchSpeedMultiplier = 0.4f;
+        [Range(0, 0.3f)]
+        [SerializeField] private float _movementSmoothing = 0.05f;
+        [SerializeField] private bool _airControl = true;
+        
+        [Header("Collision Bounding")]
+        [SerializeField] private LayerMask _ground;
+        [SerializeField] private Transform _groundCheck;
+        [SerializeField] private Transform _ceilingCheck;
+        [SerializeField] private Collider2D _crouchDisableCollider;
+        [Space]
+        [Header("Events")]
+        [SerializeField] private UnityEvent _onLandEvent;
+        [SerializeField] private BoolEvent _onCrouchEvent;
+#pragma warning restore CS0649
+        #endregion
 
-    private void FixedUpdate()
-    {
-        bool wasGrounded = _isGrounded;
-        _isGrounded = false;
+        private const float GROUNDED_RADIUS = 0.2f;
+        private const float CEILING_RADIUS = 0.2f;
+        private bool _isCrouching = false;
+        private bool _isGrounded;
+        private bool _facingRight = true;
+        private Rigidbody2D _rigidbody2d;
+        private Vector3 _velocity = Vector3.zero;
+        private Collider2D[] _ceilingColliders;
+        private Collider2D[] _groundColliders;
 
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(
-            groundCheck.position, 
-            GROUNDED_RADIUS,
-            ground);
-        for (int i = 0; i < colliders.Length; i++)
+        #region Monobehaviour
+        private void Awake()
         {
-            if (colliders[i].gameObject != gameObject)
+            _rigidbody2d = GetComponent<Rigidbody2D>();
+            if (_onLandEvent == null)
+                _onLandEvent = new UnityEvent();
+            if (_onCrouchEvent == null)
+                _onCrouchEvent = new BoolEvent();
+        }
+
+        private void FixedUpdate()
+        {
+            bool wasGrounded = _isGrounded;
+            _isGrounded = false;
+
+            _groundColliders = Physics2D.OverlapCircleAll(
+                _groundCheck.position,
+                GROUNDED_RADIUS,
+                _ground);
+            for (int i = 0; i < _groundColliders.Length; i++)
             {
-                _isGrounded = true;
-                if (!wasGrounded)
-                    onLandEvent.Invoke();
+                if (_groundColliders[i].gameObject != gameObject
+                    && !_groundColliders[i].isTrigger)
+                {
+                    _isGrounded = true;
+                    if (!wasGrounded)
+                        _onLandEvent.Invoke();
+                }
             }
         }
-    }
-    #endregion
+        #endregion
 
-    public void Move(float move, bool crouch, bool jump)
-    {
-        if (!crouch
-            && Physics2D.OverlapCircle(
-                ceilingCheck.position,
-                CEILING_RADIUS,
-                ground))
-            crouch = true;
-
-        if (_isGrounded || airControl)
+        public void Move(float move, bool crouch, bool jump)
         {
+            _ceilingColliders = Physics2D.OverlapCircleAll(
+                _ceilingCheck.position,
+                CEILING_RADIUS,
+                _ground);
+
             if (crouch)
             {
-                if (!_isCrouching)
+                foreach (var c in _groundColliders)
                 {
-                    _isCrouching = true;
-                    onCrouchEvent.Invoke(true);
+                    if (c.GetComponent<Fallthrough>() != null)
+                    {
+                        StartCoroutine(c.
+                            GetComponent<Fallthrough>()
+                            .DisableCollider());
+                        break;
+                    }
                 }
-
-                move *= crouchSpeedMultiplier;
-
-                if (crouchDisableCollider != null)
-                    crouchDisableCollider.enabled = false;
             }
-            else
+            foreach (var collider in _ceilingColliders)
             {
-                if (crouchDisableCollider != null)
-                    crouchDisableCollider.enabled = true;
-                if (_isCrouching)
+                if (!crouch && !collider.isTrigger)
                 {
-                    _isCrouching = false;
-                    onCrouchEvent.Invoke(false);
+                    crouch = true;
+                    break;
                 }
             }
 
-            Vector3 targetVelocity = new Vector2(move * 10f, 
-                _rigidbody2d.velocity.y);
+            if (_isGrounded || _airControl)
+            {
+                if (crouch)
+                {
+                    if (!_isCrouching)
+                    {
+                        _isCrouching = true;
+                        _onCrouchEvent.Invoke(true);
+                    }
 
-            _rigidbody2d.velocity = Vector3.SmoothDamp(
-                _rigidbody2d.velocity,
-                targetVelocity,
-                ref _velocity,
-                movementSmoothing);
+                    move *= _crouchSpeedMultiplier;
 
-            if ((move > 0 && !_facingRight) 
-                || (move < 0 && _facingRight))
-                Flip();
+                    if (_crouchDisableCollider != null)
+                        _crouchDisableCollider.enabled = false;
+                }
+                else
+                {
+                    if (_crouchDisableCollider != null)
+                        _crouchDisableCollider.enabled = true;
+                    if (_isCrouching)
+                    {
+                        _isCrouching = false;
+                        _onCrouchEvent.Invoke(false);
+                    }
+                }
+
+                Vector3 targetVelocity = new Vector2(move * 10f,
+                    _rigidbody2d.velocity.y);
+
+                _rigidbody2d.velocity = Vector3.SmoothDamp(
+                    _rigidbody2d.velocity,
+                    targetVelocity,
+                    ref _velocity,
+                    _movementSmoothing);
+
+                if ((move > 0 && !_facingRight)
+                    || (move < 0 && _facingRight))
+                    Flip();
+            }
+
+            if (_isGrounded 
+                && jump 
+                && _rigidbody2d.velocity.y < 10f)
+            {
+                _isGrounded = false;
+                _rigidbody2d.AddForce(new Vector2(0f, _jumpForce));
+            }
         }
-        
-        if (_isGrounded && jump)
+
+        private void Flip()
         {
-            _isGrounded = false;
-            _rigidbody2d.AddForce(new Vector2(0f, jumpForce));
+            _facingRight = !_facingRight;
+            var scale = transform.localScale;
+            scale.x *= -1;
+            transform.localScale = scale;
         }
+
     }
 
-    private void Flip()
-    {
-        _facingRight = !_facingRight;
-        var scale = transform.localScale;
-        scale.x *= -1;
-        transform.localScale = scale;
-    }
-
+    class BoolEvent : UnityEvent<bool> { }
 }
+/* BUG: Player will "double jump" if the jump key is mashed,
+ * occurs unpredictably but tied to physics loop.
+ * SOLUTION: Before applying force, check to make sure player does
+ * not have a large vertical velocity. */

@@ -1,34 +1,47 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Movement2D : MonoBehaviour
+namespace Unexpected.Player
 {
-    public Controller2D controller;
-    public float runSpeed = 40f;
-
-    private float _horizontalMove = 0f;
-    private bool _jumping;
-    private bool _crouching;
-    
-    private void FixedUpdate()
+    public class Movement2D : MonoBehaviour
     {
-        controller.Move(_horizontalMove * Time.fixedDeltaTime, _crouching, _jumping);
-        _jumping = false;
-    }
+        #region Serialized Fields
+#pragma warning disable CS0649
+        [SerializeField] private Controller2D _controller;
+        [SerializeField] private float _runSpeed = 40f;
+        [SerializeField] private LayerMask _groundLayer;
+#pragma warning restore CS0649
+        #endregion
 
-    public void Move(InputAction.CallbackContext context)
-    {
-        var input = context.ReadValue<Vector2>();
-        _horizontalMove = input.x * runSpeed;
-        if (input.y > 0)
-            _jumping = true;
-        if (input.y < 0)
-            _crouching = true;
-        else
-            _crouching = false;
+        private float _horizontalMove = 0f;
+        private bool _jumping;
+        private bool _crouching;
+
+        private void FixedUpdate()
+        {
+            _controller.Move(
+                _horizontalMove * Time.fixedDeltaTime, 
+                _crouching, 
+                _jumping);
+            _jumping = false;
+        }
+
+        public void Move(InputAction.CallbackContext context)
+        {
+            var input = context.ReadValue<Vector2>();
+            _horizontalMove = input.x * _runSpeed;
+            if (input.y > 0)
+                _jumping = true;
+            if (input.y < 0)
+            {
+                _crouching = true;
+            }
+            else
+                _crouching = false;
+        }
+
     }
 }
-
 /* This uses the new InputSystem package for unity, which is more 
    efficient because it relies on events being fired off instead of
    the Update() method. I think. */
