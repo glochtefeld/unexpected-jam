@@ -12,18 +12,6 @@ namespace Unexpected.Objects.Platforms.Types
     #pragma warning restore CS0649
         #endregion
 
-        #region Monobehaviour
-        void Start()
-        {
-        
-        }
-
-        void Update()
-        {
-        
-        }
-        #endregion
-
         public void Activate() =>
             transform.Rotate(
                 0,
@@ -31,3 +19,6 @@ namespace Unexpected.Objects.Platforms.Types
                 _degreesPerSecond * Time.fixedDeltaTime * _direction);
     }
 }
+/* Rotates the platform in the specified direction at a number of 
+ * degrees / second. For direction, -1 -> counterclockwise and 
+ * 1 -> clockwise. */

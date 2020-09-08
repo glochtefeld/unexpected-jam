@@ -48,6 +48,7 @@ namespace Unexpected.Player
                 _onLandEvent = new UnityEvent();
             if (_onCrouchEvent == null)
                 _onCrouchEvent = new BoolEvent();
+
         }
 
         private void FixedUpdate()
@@ -79,6 +80,7 @@ namespace Unexpected.Player
                 CEILING_RADIUS,
                 _ground);
 
+            // Trigger fallthrough, if available
             if (crouch)
             {
                 foreach (var c in _groundColliders)
@@ -92,15 +94,25 @@ namespace Unexpected.Player
                     }
                 }
             }
+
+            // Crouch if under a ceiling (unless it's a fallthrough)
             foreach (var collider in _ceilingColliders)
             {
-                if (!crouch && !collider.isTrigger)
+                if (collider.GetComponent<Fallthrough>() != null)
+                {
+                    StartCoroutine(collider.
+                        GetComponent<Fallthrough>()
+                        .DisableCollider());
+                    crouch = false;
+                    break;
+                }else if (!crouch && !collider.isTrigger)
                 {
                     crouch = true;
                     break;
                 }
             }
 
+            // Reduce speed when crouching
             if (_isGrounded || _airControl)
             {
                 if (crouch)
@@ -127,20 +139,21 @@ namespace Unexpected.Player
                     }
                 }
 
+                // Move left or right
                 Vector3 targetVelocity = new Vector2(move * 10f,
                     _rigidbody2d.velocity.y);
-
                 _rigidbody2d.velocity = Vector3.SmoothDamp(
                     _rigidbody2d.velocity,
                     targetVelocity,
                     ref _velocity,
                     _movementSmoothing);
-
+                // Flip sprite
                 if ((move > 0 && !_facingRight)
                     || (move < 0 && _facingRight))
                     Flip();
             }
 
+            // Jumping
             if (_isGrounded 
                 && jump 
                 && _rigidbody2d.velocity.y < 10f)
@@ -162,7 +175,8 @@ namespace Unexpected.Player
 
     class BoolEvent : UnityEvent<bool> { }
 }
-/* BUG: Player will "double jump" if the jump key is mashed,
- * occurs unpredictably but tied to physics loop.
- * SOLUTION: Before applying force, check to make sure player does
- * not have a large vertical velocity. */
+/* Controller2D() takes normalized input from the player and applies
+ * velocity to the character. It also handles calling any
+ * fallthrough platforms.*/
+/// <see cref="Fallthrough"/>
+ /* The BoolEvent class is used as a child class by Controller2D.*/

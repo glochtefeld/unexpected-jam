@@ -15,6 +15,8 @@ namespace Unexpected.Enemy.Movement
         [SerializeField] private float _rotationSpeed;
         [Range(0, 1f)]
         [SerializeField] private float _movementSmoothing;
+        [Header("Miniboss")]
+        [SerializeField] private bool _flyImmediate;
 #pragma warning restore CS0649
         #endregion
 
@@ -27,15 +29,19 @@ namespace Unexpected.Enemy.Movement
             Dead
         }
         private Movement _state;
-        private Vector2 _targetSpeed;
-        private Vector2 _targetPosition;
         private Vector3 _velocity = Vector3.zero;
         private GameObject _player;
 
         private void Awake()
         {
             _player = GameObject.FindGameObjectWithTag("Player");
-            _state = Movement.None;
+            if (_flyImmediate)
+            {
+                _state = Movement.Fired;
+                _rigidbody2d.constraints = RigidbodyConstraints2D.None;
+            }
+            else
+                _state = Movement.None;
         }
 
         public void Move()
@@ -69,16 +75,6 @@ namespace Unexpected.Enemy.Movement
             _state = Movement.Attacking;
         }
 
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            if (collision.gameObject.layer != gameObject.layer)
-            {
-                Die();
-                Destroy(gameObject);    
-            }
-            // TODO: Particle System for explosion
-        }
-
         private IEnumerator TargetPlayer()
         {
             float time = 0f;
@@ -106,7 +102,6 @@ namespace Unexpected.Enemy.Movement
                 }
             }
             _rigidbody2d.constraints = RigidbodyConstraints2D.None;
-            _targetPosition = _player.transform.position;
             _state = Movement.Fired;
             yield return null;
         }

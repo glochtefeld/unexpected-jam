@@ -24,3 +24,4 @@ namespace Unexpected.Objects.Platforms.Types
         }
     }
 }
+/* Causes a platform to allow the player to fall through when crouching. */

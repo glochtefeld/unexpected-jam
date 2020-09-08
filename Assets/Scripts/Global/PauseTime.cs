@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PauseTime : MonoBehaviour
@@ -48,5 +47,4 @@ public class PauseTime : MonoBehaviour
 
 /* This script controls both the movement of all enemies (by
  * short circuiting their FixedUpdate() methods) and the color
- * of all sprites with the Grayscale Material. This is more 
- * performant than starting coroutines for every object. */
+ * of all sprites with the Grayscale Material. */

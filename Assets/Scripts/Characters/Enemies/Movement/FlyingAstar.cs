@@ -18,7 +18,10 @@ namespace Unexpected.Enemy.Movement
 
         private Path _path;
         private int _currentWaypoint = 0;
+#pragma warning disable CS0414
         private bool _reachedEndOfPath = false;
+#pragma warning restore CS0414
+        private bool _started = false;
         private GameObject _player;
         private Transform _target;
 
@@ -31,9 +34,10 @@ namespace Unexpected.Enemy.Movement
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.gameObject != _player)
+            if (collision.gameObject != _player || _started)
                 return;
             InvokeRepeating("UpdatePath", 0f, 1f);
+            _started = true;
         }
         #endregion
 
@@ -88,3 +92,6 @@ namespace Unexpected.Enemy.Movement
         }
     }
 }
+/* Implementation of the Unity version of the A* Pathfinding Project.
+ * When the player enters the aggro range of the enemy, starts pathfinding
+ * directly towards the player. */

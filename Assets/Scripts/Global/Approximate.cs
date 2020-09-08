@@ -10,3 +10,5 @@ public class Approximate : MonoBehaviour
         return false;
     }
 }
+// TODO: Remove.
+/* Unused. Returns true if two values are approximately equal.*/

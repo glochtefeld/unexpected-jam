@@ -9,7 +9,6 @@ namespace Unexpected.Enemy
     {
         #region Serialized Fields
 #pragma warning disable CS0649
-        [SerializeField]private int _health;
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private Collider2D _mainCollider;
 #pragma warning restore CS0649
@@ -23,7 +22,9 @@ namespace Unexpected.Enemy
         #region Monobehaviour
         private void Awake()
         {
-            _movement = GetComponent<IMovement>(); 
+            _movement = GetComponent<IMovement>();
+            // TODO: get the layermask version of PlayerWalls
+            Physics2D.IgnoreLayerCollision(gameObject.layer, 12);
         }
 
         void FixedUpdate()
@@ -65,7 +66,7 @@ namespace Unexpected.Enemy
             if (collision.transform.GetChild(2).position.y 
                 > transform.position.y)
                 StartCoroutine(Die());
-            else
+            else if (!PauseTime.Paused)
                 collision.gameObject.GetComponent<Lives>().LoseLife();
         }
 
@@ -87,3 +88,5 @@ namespace Unexpected.Enemy
         #endregion
     }
 }
+/* Wrapper script for all non-major enemies. Controls pausing,
+ * dying, movement, etc. */

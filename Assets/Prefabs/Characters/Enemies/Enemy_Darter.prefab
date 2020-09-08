@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3515532252123404168}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.54, y: 12.62, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3515532253974482840}
@@ -54,6 +54,7 @@ MonoBehaviour:
   _timeToAttack: 6
   _rotationSpeed: 100
   _movementSmoothing: 0.1
+  _flyImmediate: 0
 --- !u!114 &3515532252123404169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,7 +67,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0513716a66411474f946950f572bfbf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 0
   _rigidbody: {fileID: 3515532252123404165}
   _mainCollider: {fileID: 3515532252123404170}
 --- !u!50 &3515532252123404165
