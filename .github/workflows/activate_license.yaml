@@ -1,5 +1,7 @@
 name: Activate Unity License
-on: [push]
+on:
+  pull_request: {}
+  push { branches: [master] }
 jobs:
   activate_license:
     runs-on: ubuntu-latest
@@ -7,3 +9,5 @@ jobs:
       # Activate license
       - name: Unity - Activate
         uses: webbertakken/unity-activate@v1.2
+        with:
+          unityVersion: 2020.1.3f1
