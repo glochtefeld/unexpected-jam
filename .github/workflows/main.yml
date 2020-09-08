@@ -1,7 +1,6 @@
 name: Test, Build, and Deploy
 
 on:
-  pull_request: {}
   push: { branches: [master] }
 
 env:

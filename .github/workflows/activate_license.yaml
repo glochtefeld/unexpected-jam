@@ -1,6 +1,5 @@
 name: Activate Unity License
 on:
-  pull_request: {}
   push { branches: [master] }
 jobs:
   activate_license:
