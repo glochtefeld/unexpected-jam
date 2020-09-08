@@ -6,6 +6,7 @@ public class CameraFollow : MonoBehaviour
 #pragma warning disable CS0649
     [Range(0, 1f)]
     [SerializeField] private float _movementSmoothing;
+    [SerializeField] private bool _verticalScrolling;
 #pragma warning restore CS0649
     #endregion
 
@@ -22,6 +23,8 @@ public class CameraFollow : MonoBehaviour
     {
         var targetPosition = _player.transform.position;
         targetPosition.z = -10f;
+        if (_verticalScrolling)
+            targetPosition.x = transform.position.x;
         transform.position =
             Vector3.SmoothDamp(
                 transform.position,

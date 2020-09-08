@@ -1,0 +1,201 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-356823061557086884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97d88f7d353534a4fbdeb11196057db7, type: 3}
+  m_Name: UploadItch
+  m_EditorClassIdentifier: 
+  actionType: 1
+  actionName: UploadItch
+  note: 
+  actionEnabled: 1
+  filter:
+    condition: 0
+    clauses: []
+  pathToButlerExe: C:\Games\Butler\butler.exe
+  nameOfItchUser: gavinlochtefeld
+  nameOfItchGame: unexpected-jam-private-builds
+  useGeneratedBuildVersion: 0
+  showUploadProgress: 1
+  itchChannelOverride: 
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d5886119a5c7b34d8872ab527ca3e1b, type: 3}
+  m_Name: UnityBuildSettings
+  m_EditorClassIdentifier: 
+  _basicSettings:
+    baseBuildFolder: Build
+    buildPath: $ARCHITECTURE
+    openFolderPostBuild: 1
+  _productParameters:
+    buildCounter: 7
+    lastGeneratedVersion: 1.0.2076.2848
+    version: 1.0.$DAYSSINCE("January 1, 2015").$SECONDS
+    autoGenerate: 1
+  _releaseTypeList:
+    releaseTypes:
+    - typeName: Release Build
+      bundleIndentifier: 0.1.0
+      companyName: UJD
+      productName: 60 RPM
+      developmentBuild: 1
+      allowDebugging: 0
+      enableHeadlessMode: 0
+      customDefines: 
+      sceneList:
+        enabledScenes:
+        - fileGUID: c05e80118606ffd4a8c03ce3cc2cdb49
+  _platformList:
+    platforms:
+    - enabled: 1
+      distributionList:
+        distributions: []
+      architectures:
+      - target: 5
+        name: Windows x86
+        enabled: 1
+      - target: 19
+        name: Windows x64
+        enabled: 1
+      variants: []
+      platformName: PC
+      binaryNameFormat: '{0}.exe'
+      dataDirNameFormat: '{0}_Data'
+      targetGroup: 1
+    - enabled: 1
+      distributionList:
+        distributions: []
+      architectures:
+      - target: 2
+        name: OSX
+        enabled: 1
+      variants: []
+      platformName: OSX
+      binaryNameFormat: '{0}.app'
+      dataDirNameFormat: '{0}.app/Contents'
+      targetGroup: 1
+    - enabled: 1
+      distributionList:
+        distributions: []
+      architectures:
+      - target: 25
+        name: Linux Universal
+        enabled: 0
+      - target: 17
+        name: Linux x86
+        enabled: 1
+      - target: 24
+        name: Linux x64
+        enabled: 1
+      variants: []
+      platformName: Linux
+      binaryNameFormat: '{0}.x86'
+      dataDirNameFormat: '{0}_Data'
+      targetGroup: 1
+    - enabled: 0
+      distributionList:
+        distributions: []
+      architectures:
+      - target: 20
+        name: WebGL
+        enabled: 1
+      variants: []
+      platformName: WebGL
+      binaryNameFormat: '{0}'
+      dataDirNameFormat: '{0}_Data'
+      targetGroup: 13
+  _projectConfigurations:
+    configSet:
+      _Buckets: 08000000ffffffffffffffff07000000ffffffff0200000006000000ffffffff05000000ffffffffffffffffffffffffffffffffffffffffffffffff0100000003000000
+      _HashCodes: 95139c76552a4d314f722e37db412930c634724571f6ce15390d80509617b47e9bad91470000000000000000000000000000000000000000000000000000000000000000
+      _Next: ffffffffffffffffffffffffffffffffffffffff04000000ffffffffffffffff000000000000000000000000000000000000000000000000000000000000000000000000
+      _Count: 9
+      _Version: 9
+      _FreeList: -1
+      _FreeCount: 0
+      _Keys:
+      - Release Build/PC/Windows x86
+      - Release Build/PC/Windows x64
+      - Release Build/PC
+      - Release Build/OSX/OSX
+      - Release Build/OSX
+      - Release Build/Linux/Linux x86
+      - Release Build/Linux/Linux x64
+      - Release Build/Linux
+      - Release Build
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      _Values:
+      - enabled: 1
+        childKeys: []
+      - enabled: 1
+        childKeys: []
+      - enabled: 1
+        childKeys:
+        - Release Build/PC/Windows x86
+        - Release Build/PC/Windows x64
+      - enabled: 1
+        childKeys: []
+      - enabled: 1
+        childKeys:
+        - Release Build/OSX/OSX
+      - enabled: 1
+        childKeys: []
+      - enabled: 1
+        childKeys: []
+      - enabled: 1
+        childKeys:
+        - Release Build/Linux/Linux x86
+        - Release Build/Linux/Linux x64
+      - enabled: 1
+        childKeys:
+        - Release Build/PC
+        - Release Build/OSX
+        - Release Build/Linux
+      - enabled: 1
+        childKeys: []
+      - enabled: 1
+        childKeys: []
+      - enabled: 1
+        childKeys: []
+      - enabled: 1
+        childKeys: []
+      - enabled: 1
+        childKeys: []
+      - enabled: 1
+        childKeys: []
+      - enabled: 1
+        childKeys: []
+      - enabled: 1
+        childKeys: []
+    showViewOptions: 0
+    showConfigs: 0
+    showBuildInfo: 0
+    hideDisabled: 0
+    treeView: 0
+    selectedKeyChain: Release Build/PC/Windows x86
+  _preBuildActions:
+    buildActions: []
+  _postBuildActions:
+    buildActions:
+    - {fileID: -356823061557086884}

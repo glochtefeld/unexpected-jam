@@ -7,38 +7,64 @@ public class Lives : MonoBehaviour
     #region Serialized Fields
 #pragma warning disable CS0649
     [SerializeField] private int _maxLives;
+    [SerializeField] private float _invulnTime;
+    [SerializeField] private SpriteRenderer _sprite;
+    // TODO: Add reference to UI
+    [SerializeField] private GameObject _deathFlag;
 #pragma warning restore CS0649
     #endregion
 
     public int CurrentLives { set; get; }
-    // Start is called before the first frame update
+    private bool _invulnerable = false;
+    private Color _invulnColor = new Color(255, 0, 0, 128);
+    private bool _isAlreadyDead = false;
+
+
+    #region Monobehaviour
     void Start()
     {
         CurrentLives = _maxLives;
     }
+    #endregion
 
     public void LoseLife() 
-    { 
-        Debug.Log("Lost life");
-        if (CurrentLives > 0)
-            CurrentLives--;
-        else
-        {
-            StartCoroutine(Die());
-            return;
-        }
-        StartCoroutine(Invulnerability());
+    {
+        //if (_invulnerable)
+        //    return;
+        //Debug.Log("Lost life");
+        //if (CurrentLives > 0)
+        //    CurrentLives--;
+        //else
+        //{
+        //    StartCoroutine(DeathCoroutine());
+        //    return;
+        //}
+        //StartCoroutine(Invulnerability());
 
     }
 
     private IEnumerator Invulnerability()
     {
-        throw new NotImplementedException();
+        _invulnerable = true;
+        Color normal = _sprite.color;
+        _sprite.color = _invulnColor;
+        yield return new WaitForSeconds(_invulnTime);
+        _sprite.color = normal;
+        _invulnerable = false;
     }
 
-    private IEnumerator Die()
+    public void Die()
     {
-        throw new NotImplementedException();
+        if (!_isAlreadyDead) 
+            StartCoroutine(DeathCoroutine());
+        _isAlreadyDead = true;
+    }
+
+    private IEnumerator DeathCoroutine()
+    {
+        Debug.Log("Player is Dead");
+        _deathFlag.SetActive(true);
+        yield return null;
     }
 }
 /* Number of lives that the player currently has. */
