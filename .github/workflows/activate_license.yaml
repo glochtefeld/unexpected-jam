@@ -1,6 +1,6 @@
 name: Activate Unity License
 on:
-  push { branches: [master] }
+  push: { branches: [master] }
 jobs:
   activate_license:
     runs-on: ubuntu-latest
