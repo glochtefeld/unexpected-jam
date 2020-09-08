@@ -1,0 +1,9 @@
+name: Activate Unity License
+on: [push]
+jobs:
+  activate_license:
+    runs-on: ubuntu-latest
+    steps:
+      # Activate license
+      - name: Unity - Activate
+        uses: webbertakken/unity-activate@v1.2
