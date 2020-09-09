@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2953586141929352388}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2953586142097658620}
   - component: {fileID: 2953586142097658595}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 2953586143750844199}
   - component: {fileID: 2953586143750844192}
   - component: {fileID: 2953586143750844193}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy_Bouncer
   m_TagString: Untagged
   m_Icon: {fileID: 0}

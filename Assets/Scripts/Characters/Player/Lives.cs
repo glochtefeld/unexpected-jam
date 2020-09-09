@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using Unexpected.Enemy;
 using UnityEngine;
 
 public class Lives : MonoBehaviour
@@ -24,6 +24,18 @@ public class Lives : MonoBehaviour
     void Start()
     {
         CurrentLives = _maxLives;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        var enemy = collision.gameObject.GetComponent<BaseEnemy>();
+        if (enemy == null)
+            return;
+        if (collision.transform.position.y
+            < transform.GetChild(2).position.y)
+            StartCoroutine(enemy.Die());
+        else if (!PauseTime.Paused)
+            LoseLife();
     }
     #endregion
 

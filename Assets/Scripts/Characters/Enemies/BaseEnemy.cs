@@ -58,19 +58,19 @@ namespace Unexpected.Enemy
         }
 
         #region Health and Damage
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            if (collision.gameObject.GetComponent<Lives>() == null)
-                return;
-            // Foot position
-            if (collision.transform.GetChild(2).position.y 
-                > transform.position.y)
-                StartCoroutine(Die());
-            else if (!PauseTime.Paused)
-                collision.gameObject.GetComponent<Lives>().LoseLife();
-        }
+        //private void OnCollisionEnter2D(Collision2D collision)
+        //{
+        //    if (collision.gameObject.GetComponent<Lives>() == null)
+        //        return;
+        //    // Foot position
+        //    if (collision.transform.GetChild(2).position.y 
+        //        > transform.position.y)
+        //        StartCoroutine(Die());
+        //    else if (!PauseTime.Paused)
+        //        collision.gameObject.GetComponent<Lives>().LoseLife();
+        //}
 
-        private IEnumerator Die()
+        public IEnumerator Die()
         {
             _dead = true;
             _movement.Die();

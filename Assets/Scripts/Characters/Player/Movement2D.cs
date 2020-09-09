@@ -28,7 +28,6 @@ namespace Unexpected.Player
 
         public void Move(InputAction.CallbackContext context)
         {
-            Debug.Log(context);
             var input = context.ReadValue<Vector2>();
             _horizontalMove = input.x * _runSpeed;
             if (input.y > 0)
