@@ -42,6 +42,9 @@ namespace Unexpected.Enemy
             }
             else if (PauseTime.Paused && !_isPaused)
                 StartCoroutine(FreezePosition());
+
+            if (transform.position.y < -20)
+                StartCoroutine(Die());
         }
         #endregion
 
@@ -58,18 +61,6 @@ namespace Unexpected.Enemy
         }
 
         #region Health and Damage
-        //private void OnCollisionEnter2D(Collision2D collision)
-        //{
-        //    if (collision.gameObject.GetComponent<Lives>() == null)
-        //        return;
-        //    // Foot position
-        //    if (collision.transform.GetChild(2).position.y 
-        //        > transform.position.y)
-        //        StartCoroutine(Die());
-        //    else if (!PauseTime.Paused)
-        //        collision.gameObject.GetComponent<Lives>().LoseLife();
-        //}
-
         public IEnumerator Die()
         {
             _dead = true;
@@ -83,7 +74,7 @@ namespace Unexpected.Enemy
             _rigidbody.AddForce(Vector2.down, ForceMode2D.Impulse);
             _mainCollider.enabled = false;
             yield return new WaitForSeconds(1f);
-            DestroyImmediate(gameObject);
+            Destroy(gameObject);
         }
         #endregion
     }

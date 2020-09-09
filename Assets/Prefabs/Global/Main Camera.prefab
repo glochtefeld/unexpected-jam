@@ -96,5 +96,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bcb72ba6edb79e4ca4ca0297c46447c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movementSmoothing: 0.4
+  _movementSmoothing: 0.3
   _verticalScrolling: 0

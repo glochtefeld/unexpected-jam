@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 namespace Unexpected.Enemy.Movement
 {
     [RequireComponent(typeof(Rigidbody2D))]
@@ -13,12 +14,14 @@ namespace Unexpected.Enemy.Movement
         [SerializeField] private LayerMask _ground;
         [Range(0, 1)]
         [SerializeField] private float _movementSmoothing;
+        [Range(-1,1)]
+        [SerializeField] private int _direction;
 #pragma warning restore CS0649
         #endregion
 
-        private int _direction = 1;
         private Vector3 _velocity = Vector3.zero;
-
+        private HashSet<Collider2D> _groundColliders
+            = new HashSet<Collider2D>();
         public void Move() 
         {
             Vector3 targetVelocity = new Vector2(
@@ -29,22 +32,24 @@ namespace Unexpected.Enemy.Movement
                 targetVelocity,
                 ref _velocity,
                 _movementSmoothing);
+
+            transform.localScale = (_rigidbody2d.velocity.x <= 0f)
+                ? new Vector3(-1f, 1f, 1f)
+                : Vector3.one;
         }
 
         public void Die() { }
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (other.gameObject.layer == _ground.value)
-                Flip();
+            _groundColliders.Remove(other);
+            if (_groundColliders.Count ==0)
+                _direction *= -1;
         }
 
-        private void Flip()
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            var scale = transform.localScale;
-            scale.x *= -1;
-            transform.localScale = scale;
-            _direction *= -1;
+            _groundColliders.Add(other);
         }
     }
 }
