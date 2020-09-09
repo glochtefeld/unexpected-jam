@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _grayscaleMat: {fileID: 2100000, guid: 59f44e09909a6cc45b1c0f56ede19296, type: 2}
+  _transitionTime: 0.5
+  _mixer: {fileID: 24100000, guid: 8bdf06f86274e264389f4bc3e8bdda0d, type: 2}
 --- !u!1 &7018711158595071194
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,10 +444,6 @@ MonoBehaviour:
   _maxLives: 3
   _invulnTime: 0
   _sprite: {fileID: 7018711159474827952}
-  _collider: {fileID: 5562291773864111451}
-  _enemies:
-    serializedVersion: 2
-    m_Bits: 1024
   _deathFlag: {fileID: 0}
 --- !u!70 &5562291773864111451
 CapsuleCollider2D:
