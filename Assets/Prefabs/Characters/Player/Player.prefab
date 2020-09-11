@@ -441,7 +441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxLives: 3
-  _invulnTime: 0
+  _invulnTime: 2
   _sprite: {fileID: 7018711159474827952}
   _deathFlag: {fileID: 0}
 --- !u!70 &5562291773864111451

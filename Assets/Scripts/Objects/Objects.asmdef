@@ -1,11 +1,7 @@
 {
-    "name": "Unexpected",
+    "name": "Objects",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:d3709dffa96531343ab32d345f49fa1b",
-        "GUID:6cae459778275aa44945ab363598bf23",
-        "GUID:a97ae1e2bc0ff4a4ea56ff5369d0fbc7"
+        "GUID:d3709dffa96531343ab32d345f49fa1b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

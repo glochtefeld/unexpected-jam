@@ -11,18 +11,25 @@ public class PauseTime : MonoBehaviour
 #pragma warning restore CS0649
     #endregion
 
-    private bool transitioning = false;
+    private bool _transitioning = false;
+    private static bool _ignoreInput = false;
     public static bool Paused { private set; get; }
 
     public void Pause(UnityEngine.InputSystem.InputAction.CallbackContext c)
     {
         // The callback context will fire three times, we only want one coroutine
-        if (transitioning == false)
+        if (_ignoreInput || _transitioning == false)
         {
             Paused = !Paused;   
-            transitioning = true;
+            _transitioning = true;
             StartCoroutine(GrayscaleRoutine(Paused));
         }
+    }
+
+    public static void EndLevelPause()
+    {
+        _ignoreInput = true;
+        Paused = false;
     }
 
     private IEnumerator GrayscaleRoutine(bool turnGray)
@@ -39,7 +46,7 @@ public class PauseTime : MonoBehaviour
             yield return null;
         }
         SetGrayscale(turnGray ? 1 : 0);
-        transitioning = false;
+        _transitioning = false;
     }
 
     private void SetGrayscale(float amount) =>
