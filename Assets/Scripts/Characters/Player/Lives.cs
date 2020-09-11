@@ -1,6 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using Unexpected.Enemy;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class Lives : MonoBehaviour
 {
@@ -14,42 +16,56 @@ public class Lives : MonoBehaviour
 #pragma warning restore CS0649
     #endregion
 
-    public int CurrentLives { set; get; }
+    private int _currentLives;
     private bool _invulnerable = false;
-    private Color _invulnColor = new Color(255, 0, 0, 128);
     private bool _isAlreadyDead = false;
-
 
     #region Monobehaviour
     void Start()
     {
-        CurrentLives = _maxLives;
+        _currentLives = _maxLives;
+    }
+    private void Update()
+    {
+        if (transform.position.y < -10)
+            Die();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // TODO: Add checks for pickups, regex on name?
+        var enemy = collision.gameObject.GetComponent<BaseEnemy>();
+        if (enemy == null)
+            return;
+        if (collision.transform.position.y
+            < transform.GetChild(2).position.y)
+            StartCoroutine(enemy.Die());
+        else if (!PauseTime.Paused)
+            LoseLife();
     }
     #endregion
 
     public void LoseLife() 
     {
-        //if (_invulnerable)
-        //    return;
-        //Debug.Log("Lost life");
-        //if (CurrentLives > 0)
-        //    CurrentLives--;
-        //else
-        //{
-        //    StartCoroutine(DeathCoroutine());
-        //    return;
-        //}
-        //StartCoroutine(Invulnerability());
+        if (_invulnerable)
+            return;
+        Debug.Log("Lost life");
+        if (_currentLives > 0)
+            _currentLives--;
+        else
+        {
+            Die();
+            return;
+        }
+        StartCoroutine(Invulnerability());
 
     }
 
     private IEnumerator Invulnerability()
     {
+        // TODO: Make animation for being hit blink
         _invulnerable = true;
-        Color normal = _sprite.color;
-        _sprite.color = _invulnColor;
         yield return new WaitForSeconds(_invulnTime);
-        _sprite.color = normal;
         _invulnerable = false;
     }
 
@@ -63,7 +79,9 @@ public class Lives : MonoBehaviour
     private IEnumerator DeathCoroutine()
     {
         Debug.Log("Player is Dead");
-        _deathFlag.SetActive(true);
+        //_deathFlag.SetActive(true);
+        // loads current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         yield return null;
     }
 }

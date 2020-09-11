@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -7,6 +8,10 @@ public class CameraFollow : MonoBehaviour
     [Range(0, 1f)]
     [SerializeField] private float _movementSmoothing;
     [SerializeField] private bool _verticalScrolling;
+    [SerializeField] private int _levelBoundLeft;
+    [SerializeField] private int _levelBoundRight;
+    [SerializeField] private int _levelBoundTop;
+    [SerializeField] private int _levelBoundBottom;
 #pragma warning restore CS0649
     #endregion
 
@@ -25,6 +30,14 @@ public class CameraFollow : MonoBehaviour
         targetPosition.z = -10f;
         if (_verticalScrolling)
             targetPosition.x = transform.position.x;
+        targetPosition.x = Mathf.Clamp(
+            targetPosition.x, 
+            _levelBoundLeft, 
+            _levelBoundRight);
+        targetPosition.y = Mathf.Clamp(
+            targetPosition.y,
+            _levelBoundBottom, 
+            _levelBoundTop);
         transform.position =
             Vector3.SmoothDamp(
                 transform.position,

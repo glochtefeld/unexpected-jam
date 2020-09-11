@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _grayscaleMat: {fileID: 2100000, guid: 59f44e09909a6cc45b1c0f56ede19296, type: 2}
+  _transitionTime: 0.5
+  _mixer: {fileID: 24100000, guid: 8bdf06f86274e264389f4bc3e8bdda0d, type: 2}
 --- !u!1 &7018711158595071194
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,7 +219,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7018711159757712909}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.23, y: 0.27, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7018711159474827953}
@@ -239,10 +241,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c8260aec2f97841955d22bcb762d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _jumpForce: 700
+  _runSpeed: 500
+  _jumpVelocity: 10
   _crouchSpeedMultiplier: 0.4
   _movementSmoothing: 0.05
   _airControl: 1
+  _jumpPressedMemoryTime: 0.2
+  _groundedMemoryTime: 0.25
   _ground:
     serializedVersion: 2
     m_Bits: 5376
@@ -312,10 +317,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _controller: {fileID: 7018711159757712908}
-  _runSpeed: 40
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &7018711159757712918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,8 +441,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxLives: 3
-  _invulnTime: 0
-  _sprite: {fileID: 0}
+  _invulnTime: 2
+  _sprite: {fileID: 7018711159474827952}
   _deathFlag: {fileID: 0}
 --- !u!70 &5562291773864111451
 CapsuleCollider2D:

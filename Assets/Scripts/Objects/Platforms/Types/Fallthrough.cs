@@ -1,6 +1,4 @@
 ﻿using System.Collections;
-using TMPro;
-using Unexpected.Player;
 using UnityEngine;
 
 namespace Unexpected.Objects.Platforms.Types

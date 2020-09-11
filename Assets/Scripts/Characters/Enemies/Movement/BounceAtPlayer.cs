@@ -35,6 +35,7 @@ namespace Unexpected.Enemy.Movement
             if (collision.gameObject != _player)
                 return;
             _started = true;
+            _rigidbody2d.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
         #endregion
 

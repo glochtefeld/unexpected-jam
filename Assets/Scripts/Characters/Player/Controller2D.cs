@@ -11,13 +11,15 @@ namespace Unexpected.Player
         #region Serialized Fields
 #pragma warning disable CS0649
         [Header("Movement Variables")]
-        [SerializeField] private float _jumpForce = 400f;
+        [SerializeField] private float _runSpeed = 40f;
+        [SerializeField] private float _jumpVelocity = 400f;
         [Range(0, 1)]
         [SerializeField] private float _crouchSpeedMultiplier = 0.4f;
         [Range(0, 0.3f)]
         [SerializeField] private float _movementSmoothing = 0.05f;
         [SerializeField] private bool _airControl = true;
-        
+        [SerializeField] private float _jumpPressedMemoryTime = 0.2f;
+        [SerializeField] private float _groundedMemoryTime = 0.25f;
         [Header("Collision Bounding")]
         [SerializeField] private LayerMask _ground;
         [SerializeField] private Transform _groundCheck;
@@ -32,6 +34,8 @@ namespace Unexpected.Player
 
         private const float GROUNDED_RADIUS = 0.2f;
         private const float CEILING_RADIUS = 0.2f;
+        private float _jumpPressedMemory = 0f;
+        private float _groundedMemory = 0f;
         private bool _isCrouching = false;
         private bool _isGrounded;
         private bool _facingRight = true;
@@ -56,6 +60,9 @@ namespace Unexpected.Player
             bool wasGrounded = _isGrounded;
             _isGrounded = false;
 
+            _groundedMemory -= Time.fixedDeltaTime;
+            _jumpPressedMemory -= Time.fixedDeltaTime;
+
             _groundColliders = Physics2D.OverlapCircleAll(
                 _groundCheck.position,
                 GROUNDED_RADIUS,
@@ -66,6 +73,7 @@ namespace Unexpected.Player
                     && !_groundColliders[i].isTrigger)
                 {
                     _isGrounded = true;
+                    _groundedMemory = _groundedMemoryTime;
                     if (!wasGrounded)
                         _onLandEvent.Invoke();
                 }
@@ -75,6 +83,10 @@ namespace Unexpected.Player
 
         public void Move(float move, bool crouch, bool jump)
         {
+
+            if (jump)
+                _jumpPressedMemory = _jumpPressedMemoryTime;
+
             _ceilingColliders = Physics2D.OverlapCircleAll(
                 _ceilingCheck.position,
                 CEILING_RADIUS,
@@ -140,7 +152,7 @@ namespace Unexpected.Player
                 }
 
                 // Move left or right
-                Vector3 targetVelocity = new Vector2(move * 10f,
+                Vector3 targetVelocity = new Vector2(move * _runSpeed,
                     _rigidbody2d.velocity.y);
                 _rigidbody2d.velocity = Vector3.SmoothDamp(
                     _rigidbody2d.velocity,
@@ -154,12 +166,13 @@ namespace Unexpected.Player
             }
 
             // Jumping
-            if (_isGrounded 
-                && jump 
+            if (_groundedMemory > 0
+                && _jumpPressedMemory > 0
                 && _rigidbody2d.velocity.y < 10f)
             {
                 _isGrounded = false;
-                _rigidbody2d.AddForce(new Vector2(0f, _jumpForce));
+                _rigidbody2d.velocity = new Vector2(_rigidbody2d.velocity.x, _jumpVelocity);
+                //_rigidbody2d.AddForce(new Vector2(0f, _jumpForce));
             }
         }
 
