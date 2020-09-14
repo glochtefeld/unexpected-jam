@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Intro.unity
     guid: f4a8b89426b0fd3459941530636a8e62
+  - enabled: 1
+    path: Assets/Scenes/BossTrials/MiniBossTrial.unity
+    guid: c05e80118606ffd4a8c03ce3cc2cdb49
   m_configObjects: {}

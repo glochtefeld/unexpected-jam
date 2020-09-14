@@ -1,5 +1,6 @@
 ﻿using Unexpected.Objects.Platforms.Types;
 using UnityEngine;
+using Unexpected.Enemy;
 
 namespace Unexpected.Objects.Platforms
 {

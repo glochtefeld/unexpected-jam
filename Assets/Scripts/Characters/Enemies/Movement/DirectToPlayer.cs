@@ -15,6 +15,8 @@ namespace Unexpected.Enemy.Movement
         [SerializeField] private float _rotationSpeed;
         [Range(0, 1f)]
         [SerializeField] private float _movementSmoothing;
+        [Space]
+        [SerializeField] private Animator _animator;
         [Header("Miniboss")]
         [SerializeField] private bool _flyImmediate;
 #pragma warning restore CS0649
@@ -53,6 +55,7 @@ namespace Unexpected.Enemy.Movement
                     _state = Movement.Aiming;
                     break;
                 case Movement.Fired:
+                    _animator.SetBool("isCharging", true);
                     Vector3 targetVelocity =
                         (Vector2)transform.right * Time.fixedDeltaTime * _speed;
                     _rigidbody2d.velocity = Vector3.SmoothDamp(

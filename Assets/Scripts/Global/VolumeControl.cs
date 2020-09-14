@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Audio;
 
-namespace Scripts.Menus
+namespace Unexpected
 {
     public class VolumeControl : MonoBehaviour
     {

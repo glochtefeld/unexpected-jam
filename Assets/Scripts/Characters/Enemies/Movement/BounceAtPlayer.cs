@@ -17,6 +17,8 @@ namespace Unexpected.Enemy.Movement
         [SerializeField] private LayerMask _ground;
         [Space]
         [SerializeField] private Transform _sprite;
+        [Space]
+        [SerializeField] private Animator _animator;
 #pragma warning restore CS0649
         #endregion
 
@@ -72,11 +74,15 @@ namespace Unexpected.Enemy.Movement
                 _ground) != null)
                 Jump();
 
+
         }
         #endregion
 
-        private void Jump() => 
+        private void Jump()
+        {
             _rigidbody2d.AddForce(new Vector2(0f, _jumpForce));
+            _animator.SetBool("isJumping", true);
+        } 
 
     }
 }

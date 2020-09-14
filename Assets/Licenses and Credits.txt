@@ -19,3 +19,11 @@ https://freemusicarchive.org/music/The_Underscore_Orkestra/Table_Dance/The_Under
 
 The Underscore Orkestra - Cocek. CC-3.0-BY-NC-SA
 https://freemusicarchive.org/music/The_Underscore_Orkestra/No_Money_No_Honey_All_We_Got_Is_Us/Cocek
+
+Simple Free Pixel art styled UI pack: Jakub Varga.
+https://assetstore.unity.com/packages/2d/gui/icons/simple-free-pixel-art-styled-ui-pack-165012
+
+(Can be removed eventually)
+Pixel Art Heart: BenBushnell on pixabay.com. 
+Asset: https://pixabay.com/illustrations/pixel-heart-heart-pixel-symbol-red-2779422/
+License: https://pixabay.com/service/license/

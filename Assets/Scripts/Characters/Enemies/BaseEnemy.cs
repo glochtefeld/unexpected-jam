@@ -11,6 +11,8 @@ namespace Unexpected.Enemy
 #pragma warning disable CS0649
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private Collider2D _mainCollider;
+        [SerializeField] private Animator _animator;
+        [SerializeField] private ParticleSystem _ps;
 #pragma warning restore CS0649
         #endregion
 
@@ -39,6 +41,7 @@ namespace Unexpected.Enemy
                 _rigidbody.constraints = 
                     RigidbodyConstraints2D.FreezeRotation;
                 _isPaused = false;
+                _animator.speed = 1;
             }
             else if (PauseTime.Paused && !_isPaused)
                 StartCoroutine(FreezePosition());
@@ -50,6 +53,7 @@ namespace Unexpected.Enemy
 
         private IEnumerator FreezePosition()
         {
+            _animator.speed = 0;
             _isPaused = true;
             _rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
             Vector3.SmoothDamp(
@@ -63,18 +67,24 @@ namespace Unexpected.Enemy
         #region Health and Damage
         public IEnumerator Die()
         {
-            _dead = true;
-            _movement.Die();
-            while (PauseTime.Paused)
+            var ps = Instantiate(_ps, transform.position, Quaternion.identity);
+            ps.Play();
+            
+            if (!_dead)
             {
-                yield return null;
+                _dead = true;
+                _movement.Die();
+                while (PauseTime.Paused)
+                {
+                    yield return null;
+                }
+                _rigidbody.constraints = RigidbodyConstraints2D.None;
+                _rigidbody.AddTorque(1, ForceMode2D.Impulse);
+                _rigidbody.AddForce(Vector2.down, ForceMode2D.Impulse);
+                _mainCollider.enabled = false;
+                yield return new WaitForSeconds(1f);
+                Destroy(gameObject);
             }
-            _rigidbody.constraints = RigidbodyConstraints2D.None;
-            _rigidbody.AddTorque(1, ForceMode2D.Impulse);
-            _rigidbody.AddForce(Vector2.down, ForceMode2D.Impulse);
-            _mainCollider.enabled = false;
-            yield return new WaitForSeconds(1f);
-            Destroy(gameObject);
         }
         #endregion
     }

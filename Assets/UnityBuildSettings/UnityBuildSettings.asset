@@ -21,7 +21,7 @@ MonoBehaviour:
     clauses: []
   pathToButlerExe: C:\Games\Butler\butler.exe
   nameOfItchUser: gavinlochtefeld
-  nameOfItchGame: unexpected-jam-private-builds
+  nameOfItchGame: 60-rps
   useGeneratedBuildVersion: 0
   showUploadProgress: 1
   itchChannelOverride: 
@@ -42,8 +42,8 @@ MonoBehaviour:
     buildPath: $ARCHITECTURE
     openFolderPostBuild: 1
   _productParameters:
-    buildCounter: 7
-    lastGeneratedVersion: 1.0.2076.2848
+    buildCounter: 2
+    lastGeneratedVersion: 1.0.2083.676
     version: 1.0.$DAYSSINCE("January 1, 2015").$SECONDS
     autoGenerate: 1
   _releaseTypeList:
@@ -51,13 +51,15 @@ MonoBehaviour:
     - typeName: Release Build
       bundleIndentifier: 0.1.0
       companyName: UJD
-      productName: 60 RPM
-      developmentBuild: 1
+      productName: 60 RPS
+      developmentBuild: 0
       allowDebugging: 0
       enableHeadlessMode: 0
       customDefines: 
       sceneList:
         enabledScenes:
+        - fileGUID: 6c5a9f4efc884d34a9838656f18dd9eb
+        - fileGUID: f4a8b89426b0fd3459941530636a8e62
         - fileGUID: c05e80118606ffd4a8c03ce3cc2cdb49
   _platformList:
     platforms:
@@ -97,7 +99,7 @@ MonoBehaviour:
         enabled: 0
       - target: 17
         name: Linux x86
-        enabled: 1
+        enabled: 0
       - target: 24
         name: Linux x64
         enabled: 1
@@ -120,11 +122,11 @@ MonoBehaviour:
       targetGroup: 13
   _projectConfigurations:
     configSet:
-      _Buckets: 08000000ffffffffffffffff07000000ffffffff0200000006000000ffffffff05000000ffffffffffffffffffffffffffffffffffffffffffffffff0100000003000000
-      _HashCodes: 95139c76552a4d314f722e37db412930c634724571f6ce15390d80509617b47e9bad91470000000000000000000000000000000000000000000000000000000000000000
-      _Next: ffffffffffffffffffffffffffffffffffffffff04000000ffffffffffffffff000000000000000000000000000000000000000000000000000000000000000000000000
-      _Count: 9
-      _Version: 9
+      _Buckets: 07000000ffffffffffffffff06000000ffffffff0200000005000000ffffffff04000000ffffffffffffffffffffffffffffffffffffffffffffffff0100000003000000
+      _HashCodes: 95139c76552a4d314f722e37db412930c6347245390d80509617b47e9bad9147000000000000000000000000000000000000000000000000000000000000000000000000
+      _Next: ffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000000000000000000000000000000000000000000000000000000000000000000000000000
+      _Count: 8
+      _Version: 8
       _FreeList: -1
       _FreeCount: 0
       _Keys:
@@ -133,10 +135,10 @@ MonoBehaviour:
       - Release Build/PC
       - Release Build/OSX/OSX
       - Release Build/OSX
-      - Release Build/Linux/Linux x86
       - Release Build/Linux/Linux x64
       - Release Build/Linux
       - Release Build
+      - 
       - 
       - 
       - 
@@ -162,16 +164,15 @@ MonoBehaviour:
       - enabled: 1
         childKeys: []
       - enabled: 1
-        childKeys: []
-      - enabled: 1
         childKeys:
-        - Release Build/Linux/Linux x86
         - Release Build/Linux/Linux x64
       - enabled: 1
         childKeys:
         - Release Build/PC
         - Release Build/OSX
         - Release Build/Linux
+      - enabled: 1
+        childKeys: []
       - enabled: 1
         childKeys: []
       - enabled: 1

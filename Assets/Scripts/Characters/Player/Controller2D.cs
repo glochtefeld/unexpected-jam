@@ -45,8 +45,9 @@ namespace Unexpected.Player
         private Collider2D[] _groundColliders;
 
         #region Monobehaviour
-        private void Awake()
+        private void Start()
         {
+            transform.position = CheckpointController.Instance.StartPosition;
             _rigidbody2d = GetComponent<Rigidbody2D>();
             if (_onLandEvent == null)
                 _onLandEvent = new UnityEvent();
@@ -75,7 +76,9 @@ namespace Unexpected.Player
                     _isGrounded = true;
                     _groundedMemory = _groundedMemoryTime;
                     if (!wasGrounded)
+                    {
                         _onLandEvent.Invoke();
+                    }
                 }
             }
         }
@@ -186,7 +189,7 @@ namespace Unexpected.Player
 
     }
 
-    class BoolEvent : UnityEvent<bool> { }
+    public class BoolEvent : UnityEvent<bool> { }
 }
 /* Controller2D() takes normalized input from the player and applies
  * velocity to the character. It also handles calling any

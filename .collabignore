@@ -1,0 +1,58 @@
+# ===========================
+# Default Collab Ignore Rules
+# ===========================
+
+# OS Generated
+# ============
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+[Tt]humbs.db
+[Dd]esktop.ini
+
+# Visual Studio / MonoDevelop generated
+# =====================================
+[Ee]xported[Oo]bj/
+*.userprefs
+*.csproj
+*.pidb
+*.suo
+*.sln
+*.user
+*.unityproj
+*.booproj
+
+# Unity generated
+# ===============
+[Oo]bj/
+[Bb]uild
+
+# Personal folders
+[Ii]deation/
+[Bb]uild-scripts/
+
+# Personal assets
+Assets/Plugins/RainbowAssets/
+Assets/Plugins/RainbowAssets*
+
+
+# Git/Github holdover
+.gitignore
+.git/
+
+# Super Unity Build packages (only one person needs)
+/[Aa]ssets/UnityBuild/
+Assets/UnityBuild-FileUtility/
+Assets/UnityBuild-ItchUploader/
+Assets/UnityBuild-ZipFile/
+Assets/UnityBuildSettings/
+Assets/Unity*.meta
+
+# SFX - ignored until final effects are chosen
+Assets/Ultimate Sound FX Bundle/
+
+sysinfo.txt
+*.stackdump
